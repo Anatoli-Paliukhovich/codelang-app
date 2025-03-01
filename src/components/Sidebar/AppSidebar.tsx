@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 export function AppSidebar() {
   return (
-    <Sidebar className="absolute" collapsible="icon">
+    <Sidebar className="absolute h-full" collapsible="icon">
       <SidebarGroup>
         <SidebarMenu>
           <SidebarMenuItem>

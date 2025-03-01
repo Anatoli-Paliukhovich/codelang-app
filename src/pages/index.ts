@@ -8,7 +8,7 @@ export { default as CreatePost } from "./CreatePost";
 export { default as MyPosts } from "./MyPosts";
 export { default as EditPost } from "./EditPost";
 export { default as Users } from "./Users";
-export { default as User } from "./User";
+export { default as UserProfile } from "./UserProfile";
 export { default as Questions } from "./Questions";
 export { default as CreateQuestion } from "./CreateQuestion";
 export { default as EditQuestion } from "./EditQuestion";

@@ -87,7 +87,7 @@ function SidebarProvider({
   );
 
   React.useEffect(() => {
-    if (isMobile && openMobile) {
+    if (isMobile) {
       setOpenMobile(false);
     }
   }, [location, isMobile, setOpen, setOpenMobile]);

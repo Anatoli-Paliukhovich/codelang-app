@@ -1,7 +1,9 @@
-import { Outlet } from "react-router-dom";
-import { Header, Sidebar } from "@/components";
+import { Outlet, useNavigation } from "react-router-dom";
+import { Header, Loading, Sidebar } from "@/components";
 
 const HomeLayout = () => {
+  const navigation = useNavigation();
+  const isPageLoading = navigation.state === "loading";
   return (
     <div className="wrapper">
       <Header />
@@ -11,7 +13,7 @@ const HomeLayout = () => {
             <Sidebar></Sidebar>
           </div>
           <div className="flex-1 p-4">
-            <Outlet />
+            {isPageLoading ? <Loading /> : <Outlet />}
           </div>
         </div>
       </main>
