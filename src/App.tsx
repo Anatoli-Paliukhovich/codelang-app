@@ -10,8 +10,8 @@ import {
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Error } from "./pages";
 import { ErrorElement } from "./components";
-import { loader as usersLoader } from "./pages/Users";
-import { loader as userLoader } from "./pages/UserProfile";
+import { usersLoader, userLoader } from "./api";
+
 const router = createBrowserRouter([
   {
     path: "/",

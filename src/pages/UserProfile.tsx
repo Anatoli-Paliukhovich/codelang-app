@@ -1,32 +1,7 @@
-import {
-  useLoaderData,
-  type LoaderFunction,
-  type LoaderFunctionArgs,
-} from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { StatisticsItem } from "@/components";
-import {
-  customFetch,
-  type UserResponse,
-  type UserStatisticResponse,
-  type UserProfileLoaderData,
-} from "@/utils";
+import { type UserProfileLoaderData } from "@/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-export const loader: LoaderFunction = async ({
-  params,
-}: LoaderFunctionArgs): Promise<UserProfileLoaderData> => {
-  const userId = params.id;
-
-  const [userResponse, statisticResponse] = await Promise.all([
-    customFetch<UserResponse>(`/users/${userId}`),
-    customFetch<UserStatisticResponse>(`/users/${userId}/statistic`),
-  ]);
-
-  return {
-    user: userResponse.data.data,
-    statistic: statisticResponse.data.data.statistic,
-  };
-};
 
 const UserProfile = () => {
   const { user, statistic } = useLoaderData() as UserProfileLoaderData;
