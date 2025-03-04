@@ -8,3 +8,5 @@ export { default as Loading } from "../components/Loading/Loading";
 export { default as Filters } from "../components/Filters/Filters";
 export { default as FormInput } from "../components/FormInput/FormInput";
 export { default as FormSelect } from "../components/FormSelect/FormSelect";
+export { default as Pagination } from "../components/Pagination/Pagination";
+export { default as SubmitBtn } from "../components/SubmitBtn/SubmitBtn";

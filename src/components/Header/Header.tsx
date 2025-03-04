@@ -1,46 +1,49 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { logoutUser } from "@/features/user/userSlice";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import Logo from "../Logo/Logo";
-const Header = () => {
-  const [user, setUser] = useState<string | null>("User");
-  const navigate = useNavigate();
 
+const Header = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.userState.user);
   const handleUser = () => {
-    setUser(null);
+    dispatch(logoutUser());
+    toast("You are logged out!");
     navigate("/");
   };
   return (
     <header className="bg-primary shadow-md z-30">
       <div className="element-container flex justify-between items-center">
         <Logo />
-        <div className=" flex justify-center items-center sm:justify-end py-5 font-medium">
+        <div className="flex justify-center items-center sm:justify-end py-5 font-medium">
           {user ? (
             <div className="flex items-center gap-x-3">
-              <div className="">Hello, {user}</div>
               <Button
-                variant="link"
+                variant="outline"
                 size="sm"
                 onClick={handleUser}
-                className="cursor-pointer text-background"
+                className="cursor-pointer bg:--accent text-primary"
               >
                 Logout
               </Button>
             </div>
           ) : (
-            <div className="flex items-center">
+            <div className="flex items-center gap-6 ">
               <Button
-                className="text-background"
+                className="cursor-pointer bg:--accent text-primary"
                 asChild
-                variant="link"
+                variant="outline"
                 size="sm"
               >
-                <Link to="/login">Sign in / Guest</Link>
+                <Link to="/login">Login</Link>
               </Button>
               <Button
-                className="text-background"
+                className="cursor-pointer bg:--accent text-primary"
                 asChild
-                variant="link"
+                variant="outline"
                 size="sm"
               >
                 <Link to="/register">Register</Link>

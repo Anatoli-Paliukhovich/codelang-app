@@ -2,8 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import { type UsersResponse } from "@/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Filters } from "@/components";
-
+import { Filters, Pagination } from "@/components";
 
 const Users = () => {
   const {
@@ -34,6 +33,7 @@ const Users = () => {
           })}
         </div>
       </div>
+      <Pagination></Pagination>
     </>
   );
 };

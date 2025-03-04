@@ -1,7 +1,8 @@
+import { CircleUserRound } from "lucide-react";
 const UserLogo = () => {
   return (
     <div className="flex items-center justify-center -m-1">
-      <div className="w-6 h-6 bg-amber-700 rounded-full "></div>
+      <CircleUserRound size={28} color="#3B82F6" />
     </div>
   );
 };

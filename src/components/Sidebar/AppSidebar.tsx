@@ -10,8 +10,10 @@ import {
 import { links } from "@/utils/index";
 import UserLogo from "../UserLogo/UserLogo";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "@/hooks";
 
 export function AppSidebar() {
+  const userName = useAppSelector((state) => state.userState.user?.username);
   return (
     <Sidebar className="absolute h-full" collapsible="icon">
       <SidebarGroup>
@@ -20,7 +22,9 @@ export function AppSidebar() {
             <SidebarMenuButton asChild className="pointer-events-none">
               <div>
                 <UserLogo></UserLogo>
-                <span className="pl-1 text-lg font-medium">User Name</span>
+                <span className="pl-1 text-lg font-medium">
+                  {userName ? userName : "Guest User"}
+                </span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>

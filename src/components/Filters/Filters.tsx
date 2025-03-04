@@ -13,7 +13,6 @@ const Filters = () => {
     data?.data?.length > 0
       ? Object.keys(data.data[0])
       : ["id", "username", "role"];
-  console.log(SEARCH_BY_OPTIONS);
 
   const SORT_BY_OPTIONS = [
     "id:ASC",
