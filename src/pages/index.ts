@@ -2,7 +2,6 @@ export { default as Register } from "./Register";
 export { default as Login } from "./Login";
 export { default as HomeLayout } from "./HomeLayout";
 export { default as Home } from "./Home";
-export { default as Post } from "./Post";
 export { default as Account } from "./Account";
 export { default as CreatePost } from "./CreatePost";
 export { default as MyPosts } from "./MyPosts";

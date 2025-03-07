@@ -60,3 +60,30 @@ export type Params = {
 };
 
 export type UsersResponseWithParams = UsersResponse & { params: Params };
+
+export type Mark = {
+  id: string;
+  type: "like" | "dislike";
+  user: User;
+};
+export type Comment = {
+  id: string;
+  content: string;
+};
+export type Snippet = {
+  id: string;
+  language: string;
+  code: string;
+  marks: Mark[];
+  user: User;
+  comments: Comment[];
+};
+
+export type SnippetsResponse = {
+  data: {
+    data: Snippet[];
+    meta: UsersMeta;
+  };
+};
+
+export type SnippetsResponseWithParams = SnippetsResponse & { params: Params };

@@ -10,7 +10,7 @@ import {
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Error } from "./pages";
 import { ErrorElement } from "./components";
-import { usersLoader, userLoader } from "./api";
+import { usersLoader, userLoader, snippetsLoader } from "./api";
 //actions
 import { action as registerUser } from "./pages/Register";
 import { store } from "./store";
@@ -26,6 +26,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
         errorElement: <ErrorElement />,
+        loader: snippetsLoader,
       },
       {
         path: "me",

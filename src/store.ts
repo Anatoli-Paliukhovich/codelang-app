@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "@/features/user/userSlice";
+import likesReducer from "@/features/snippetSlice";
+
 export const store = configureStore({
   reducer: {
     userState: userReducer,
+    likes: likesReducer,
   },
 });
 
