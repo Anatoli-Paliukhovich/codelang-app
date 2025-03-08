@@ -3,6 +3,7 @@ import {
   Login,
   HomeLayout,
   Home,
+  Snippet,
   Account,
   Users,
   UserProfile,
@@ -10,7 +11,7 @@ import {
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Error } from "./pages";
 import { ErrorElement } from "./components";
-import { usersLoader, userLoader, snippetsLoader } from "./api";
+import { usersLoader, userLoader, snippetsLoader, snippetLoader } from "./api";
 //actions
 import { action as registerUser } from "./pages/Register";
 import { store } from "./store";
@@ -27,6 +28,12 @@ const router = createBrowserRouter([
         element: <Home />,
         errorElement: <ErrorElement />,
         loader: snippetsLoader,
+      },
+      {
+        path: "snippets/:id",
+        element: <Snippet />,
+        errorElement: <ErrorElement />,
+        loader: snippetLoader,
       },
       {
         path: "me",

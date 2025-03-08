@@ -10,3 +10,4 @@ export { default as FormInput } from "../components/FormInput/FormInput";
 export { default as FormSelect } from "../components/FormSelect/FormSelect";
 export { default as Pagination } from "../components/Pagination/Pagination";
 export { default as SubmitBtn } from "../components/SubmitBtn/SubmitBtn";
+export { default as SnippetCard } from "./SnippetCard/SnippetCard";

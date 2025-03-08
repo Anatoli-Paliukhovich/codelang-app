@@ -1,12 +1,11 @@
 import axios from "axios";
 
-const productionUrl = "https://codelang.vercel.app/api";
+const productionUrl = "/api";
 
 export const customFetch = axios.create({
   baseURL: productionUrl,
+  withCredentials: true,
   headers: {
     Accept: "application/json",
-   //  "Access-Control-Allow-Credentials": true,
-   //  "Access-Control-Allow-Origin": "http://localhost:5173",
   },
 });

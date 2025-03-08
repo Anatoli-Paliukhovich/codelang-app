@@ -62,13 +62,13 @@ export type Params = {
 export type UsersResponseWithParams = UsersResponse & { params: Params };
 
 export type Mark = {
-  id: string;
+  snippetId: string;
   type: "like" | "dislike";
-  user: User;
 };
 export type Comment = {
   id: string;
   content: string;
+  user: User;
 };
 export type Snippet = {
   id: string;
@@ -77,6 +77,10 @@ export type Snippet = {
   marks: Mark[];
   user: User;
   comments: Comment[];
+};
+
+export type SnippetLoaderData = {
+  data: Snippet;
 };
 
 export type SnippetsResponse = {
