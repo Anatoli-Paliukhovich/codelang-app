@@ -20,7 +20,8 @@ export const action =
       );
       const username = response.data.data.username;
       const id = response.data.data.id;
-      store.dispatch(loginUser({ username, id }));
+		const role = response.data.data.role
+      store.dispatch(loginUser({ username, id, role }));
       return redirect("/");
     } catch (error) {
       if (error instanceof AxiosError) {

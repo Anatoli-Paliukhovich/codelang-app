@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const UserProfile = () => {
   const { user, statistic } = useLoaderData() as UserProfileLoaderData;
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-4xl font-bold mb-8">{user.username}'s Profile</h1>

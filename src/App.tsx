@@ -7,6 +7,7 @@ import {
   Account,
   Users,
   UserProfile,
+  CreatePost,
 } from "./pages";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Error } from "./pages";
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
       {
         path: "me",
         element: <Account />,
+        errorElement: <ErrorElement />,
+      },
+      {
+        path: "post",
+        element: <CreatePost />,
         errorElement: <ErrorElement />,
       },
       {

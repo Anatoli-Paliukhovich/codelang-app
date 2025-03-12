@@ -16,7 +16,7 @@ type Links = {
 export const links: Links[] = [
   { title: "Home", url: "/", icon: Home },
   { title: "My Account", url: "/me", icon: User },
-  { title: "Post Snippet", url: "#", icon: SquareDashedBottom },
+  { title: "Post Snippet", url: "/post", icon: SquareDashedBottom },
   { title: "MySnippets", url: "#", icon: SquareDashedBottomCode },
   { title: "Questions", url: "#", icon: FileQuestion },
   { title: "Users", url: "/users", icon: Users },

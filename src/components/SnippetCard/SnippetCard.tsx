@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { likeSnippet, dislikeSnippet } from "@/api";
 import { Link } from "react-router-dom";
 import { type Snippet } from "@/utils";
+import { toast } from "sonner";
 
 const SnippetCard: React.FC<Snippet> = ({
   id,
@@ -28,7 +29,7 @@ const SnippetCard: React.FC<Snippet> = ({
 }) => {
   const dispatch = useAppDispatch();
   const marksState = useAppSelector((state) => state.likes.marks);
-
+  const userLogin = useAppSelector((state) => state.userState.user);
   const likes =
     marks.filter((mark) => mark.type === "like").length +
     marksState.filter((mark) => mark.type === "like" && mark.snippetId === id)
@@ -72,26 +73,51 @@ const SnippetCard: React.FC<Snippet> = ({
       </CardContent>
       <hr className="border-border" />
       <CardFooter className="flex justify-between items-center">
-        <div className="flex items-center">
-          <ThumbsUp
-            className="mr-1 cursor-pointer text-chart-5"
-            onClick={() => {
-              dispatch(likeSnippet(id));
-            }}
-          />
-          <span>{likes}</span>
-          <ThumbsDown
-            className="ml-4 mr-1 cursor-pointer text-chart-1"
-            onClick={() => {
-              dispatch(dislikeSnippet(id));
-            }}
-          />
-          <span>{dislikes}</span>
-        </div>
-        <Link to={`/snippets/${id}`} className="ml-2 flex items-center gap-1">
-          <span>{commentsCount}</span>
-          <MessageSquareText className="mr-1 text-chart-5" />
-        </Link>
+        {userLogin ? (
+          <div className="flex items-center">
+            <ThumbsUp
+              className="mr-1 cursor-pointer text-chart-5"
+              onClick={() => {
+                dispatch(likeSnippet(id));
+              }}
+            />
+            <span>{likes}</span>
+            <ThumbsDown
+              className="ml-4 mr-1 cursor-pointer text-chart-1"
+              onClick={() => {
+                dispatch(dislikeSnippet(id));
+              }}
+            />
+            <span>{dislikes}</span>
+          </div>
+        ) : (
+          <div className="flex items-center">
+            <ThumbsUp
+              className="mr-1 cursor-pointer text-chart-5"
+              onClick={() => toast("Please login!")}
+            />
+            <span>{likes}</span>
+            <ThumbsDown
+              className="ml-4 mr-1 cursor-pointer text-chart-1"
+              onClick={() => toast("Please login!")}
+            />
+            <span>{dislikes}</span>
+          </div>
+        )}
+        {userLogin ? (
+          <Link to={`/snippets/${id}`} className="ml-2 flex items-center gap-1">
+            <span>{commentsCount}</span>
+            <MessageSquareText className="mr-1 text-chart-5" />
+          </Link>
+        ) : (
+          <div
+            onClick={() => toast("Please login!")}
+            className="ml-2 flex items-center gap-1 cursor-pointer"
+          >
+            <span>{commentsCount}</span>
+            <MessageSquareText className="mr-1 text-chart-5" />
+          </div>
+        )}
       </CardFooter>
     </Card>
   );
