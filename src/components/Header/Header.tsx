@@ -1,12 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { logoutUser } from "@/features/user/userSlice";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import Logo from "../Logo/Logo";
+import DialogHeader from "../DialogHeader/DialogHeader";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.userState.user);
   const handleUser = () => {
@@ -19,6 +21,13 @@ const Header = () => {
       <div className="element-container flex justify-between items-center">
         <Logo />
         <div className="flex justify-center items-center sm:justify-end py-5 font-medium">
+          {location.pathname === "/questions" ? (
+            <div className="flex items-center gap-x-3">
+              <DialogHeader></DialogHeader>
+            </div>
+          ) : (
+            ""
+          )}
           {user ? (
             <div className="flex items-center gap-x-3">
               <Button

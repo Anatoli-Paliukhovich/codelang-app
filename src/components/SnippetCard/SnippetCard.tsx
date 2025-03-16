@@ -11,13 +11,16 @@ import {
   ThumbsUp,
   ThumbsDown,
   MessageSquareText,
+  Trash2,
+  PencilLine,
 } from "lucide-react";
 import { getLineNumbers } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { likeSnippet, dislikeSnippet } from "@/api";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { type Snippet } from "@/utils";
 import { toast } from "sonner";
+import { Button } from "../ui/button";
 
 const SnippetCard: React.FC<Snippet> = ({
   id,
@@ -26,10 +29,12 @@ const SnippetCard: React.FC<Snippet> = ({
   user,
   comments,
   marks,
+  onDelete,
 }) => {
   const dispatch = useAppDispatch();
   const marksState = useAppSelector((state) => state.likes.marks);
-  const userLogin = useAppSelector((state) => state.userState.user);
+  const userLogin = useAppSelector((state) => state.userState?.user);
+  const location = useLocation();
   const likes =
     marks.filter((mark) => mark.type === "like").length +
     marksState.filter((mark) => mark.type === "like" && mark.snippetId === id)
@@ -70,6 +75,29 @@ const SnippetCard: React.FC<Snippet> = ({
         <div className="flex-1">
           <p className="whitespace-pre-wrap break-all ml-2">{code}</p>
         </div>
+        {location.pathname === `/mysnippets` ? (
+          <div className="flex flex-col gap-3">
+            <Button
+              className="bg-chart-1 cursor-pointer"
+              onClick={() => {
+                if (onDelete) {
+                  onDelete(id);
+                } else {
+                  console.warn("onDelete function is not defined");
+                }
+              }}
+            >
+              <Trash2 />
+            </Button>
+            <Button asChild className="bg-chart-2 cursor-pointer">
+              <Link to={`/mysnippets/${id}`}>
+                <PencilLine />
+              </Link>
+            </Button>{" "}
+          </div>
+        ) : (
+          ""
+        )}
       </CardContent>
       <hr className="border-border" />
       <CardFooter className="flex justify-between items-center">

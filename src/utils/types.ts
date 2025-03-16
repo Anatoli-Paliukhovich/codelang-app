@@ -51,14 +51,6 @@ export type UsersMeta = {
 
 export type SortParameter = [field: string, direction: "ASC" | "DESC"];
 
-export type Params = {
-  page?: number;
-  limit?: number;
-  sortBy?: string;
-  search?: string;
-  searchBy?: string;
-};
-
 export type UsersResponseWithParams = UsersResponse & { params: Params };
 
 export type Mark = {
@@ -77,6 +69,7 @@ export type Snippet = {
   marks: Mark[];
   user: User;
   comments: Comment[];
+  onDelete?: (snippetId: string) => void;
 };
 
 export type SnippetLoaderData = {
@@ -91,3 +84,39 @@ export type SnippetsResponse = {
 };
 
 export type SnippetsResponseWithParams = SnippetsResponse & { params: Params };
+
+export type Question = {
+  id: string;
+  title: string;
+  description: string;
+  attachedCode: string;
+  user: User;
+};
+
+export type QuestionResponse = {
+  data: {
+    data: Question[];
+    links: {
+      current: string;
+      next: string;
+      last: string;
+    };
+    meta: {
+      itemsPerPage: number;
+      totalItems: number;
+      currentPage: number;
+      totalPages: number;
+      sortBy: string[];
+    };
+  };
+};
+
+export type Params = {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  search?: string;
+  searchBy?: string;
+};
+
+export type QuestionResponseWithParams = QuestionResponse & { params: Params };

@@ -14,6 +14,7 @@ import { type Statistic } from "@/utils";
 import { toast } from "sonner";
 import { logoutUser } from "@/features/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { DeleteAccountDialog } from "@/components";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -21,9 +22,10 @@ const Account = () => {
   const user = useAppSelector((state) => state.userState?.user);
   const userName = user ? user.username : "Guest";
   const userId = user ? user.id : "";
-  const userRole = user ? user.role : "User  ";
+  const userRole = user ? user.role : "User   ";
   const [statistic, setStatistic] = useState<Statistic>();
   const [error, setError] = useState<string | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const {
     snippetsCount = 0,
@@ -60,22 +62,21 @@ const Account = () => {
   };
 
   const handleAccountDelete = async () => {
-    if (
-      confirm(
-        "Are you sure you want to delete your account? This action cannot be undone."
-      )
-    ) {
-      try {
-        const response = await customFetch.delete("/me");
-        if (response.status === 200) {
-          handleLogout();
-          toast("Account deleted successfully!");
-        }
-      } catch (err) {
-        console.error("Error deleting account:", err);
-        setError("Failed to delete account.");
+    try {
+      const response = await customFetch.delete("/me");
+      if (response.status === 200) {
+        handleLogout();
+        toast("Account deleted successfully!");
       }
+    } catch (err) {
+      console.error("Error deleting account:", err);
+      setError("Failed to delete account.");
     }
+  };
+
+  const handleConfirmDelete = () => {
+    handleAccountDelete();
+    setIsDialogOpen(false);
   };
 
   if (error) {
@@ -104,7 +105,7 @@ const Account = () => {
                 </Button>
                 <Button
                   className="bg-destructive cursor-pointer"
-                  onClick={handleAccountDelete}
+                  onClick={() => setIsDialogOpen(true)}
                 >
                   <Trash2 />
                 </Button>
@@ -144,6 +145,11 @@ const Account = () => {
           </div>
         </div>
       </Card>
+      <DeleteAccountDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onConfirm={handleConfirmDelete}
+      />
     </>
   );
 };

@@ -9,6 +9,7 @@ const initialState: Snippet = {
   marks: [],
   user: { id: 1, username: "", role: "user" },
   comments: [],
+  onDelete: (id: string) => {},
 };
 export const addComment = createAsyncThunk(
   "snippets/addComment",

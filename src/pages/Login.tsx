@@ -20,7 +20,7 @@ export const action =
       );
       const username = response.data.data.username;
       const id = response.data.data.id;
-		const role = response.data.data.role
+      const role = response.data.data.role;
       store.dispatch(loginUser({ username, id, role }));
       return redirect("/");
     } catch (error) {
@@ -30,8 +30,8 @@ export const action =
       } else {
         toast.error("An unexpected error occurred");
       }
-      return null;
     }
+    return null;
   };
 
 const Login = () => {

@@ -33,11 +33,9 @@ const userSlice = createSlice({
         },
         logoutUser: (state) => {
             localStorage.removeItem('user');
-            console.log('я отработал');
 
             console.log(localStorage.getItem('user'));
             state.user = null;
-            console.log('я закончил');
         },
         updateUser: (state, action: PayloadAction<Partial<User>>) => {
             if (state.user) {

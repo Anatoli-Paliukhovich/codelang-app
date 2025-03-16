@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,46 +9,44 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { customFetch } from "@/utils";
+import { Textarea } from "../ui/textarea";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { useNavigate } from "react-router-dom";
 
-const formSchema = z
-  .object({
-    oldPassword: z
-      .string()
-      .min(6, { message: "Password must be at least 6 characters." }),
-    newPassword: z
-      .string()
-      .min(6, { message: "Password must be at least 6 characters." }),
-    confirmPassword: z
-      .string()
-      .min(6, { message: "Password must be at least 6 characters." }),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+const formSchema = z.object({
+  title: z.string().min(1, { message: "Title must be at least 1 character." }),
+  description: z
+    .string()
+    .min(1, { message: "Description must be at least 1 character." }),
+  attachedCode: z
+    .string()
+    .min(1, { message: "Code must be at least 1 character." }),
+});
 
-function ChangedPasswordForm() {
+export function AskQuestionForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      oldPassword: "",
-      newPassword: "",
-      confirmPassword: "",
+      title: "",
+      description: "",
+      attachedCode: "",
     },
   });
+  const navigate = useNavigate();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { confirmPassword, ...reqData } = values;
+    const { ...reqData } = values;
 
     try {
-      await customFetch.patch("/me/password", reqData);
-      toast("Password successfully changed!");
+      await customFetch.post("/questions", reqData);
+      toast("Question created successfully!");
       form.reset();
+      navigate("/questions");
     } catch (err) {
-      console.error("Error changing password:", err);
+      console.error("Error creating snippet:", err);
       toast("Something went wrong!");
       return null;
     }
@@ -57,56 +54,59 @@ function ChangedPasswordForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="oldPassword"
+          name="title"
           render={({ field }) => (
             <FormItem>
               <FormMessage className="text-red-500" />
               <FormControl>
-                <Input type="password" placeholder="Old password" {...field} />
+                <Input type="text" placeholder="Question title" {...field} />
               </FormControl>
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
-          name="newPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormMessage className="text-red-500" />
-              <FormControl>
-                <Input type="password" placeholder="New password" {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="confirmPassword"
+          name="description"
           render={({ field }) => (
             <FormItem>
               <FormMessage className="text-red-500" />
               <FormControl>
                 <Input
-                  type="password"
-                  placeholder="Confirm password"
+                  type="text"
+                  placeholder="Question description"
                   {...field}
                 />
               </FormControl>
             </FormItem>
           )}
         />
-
-        <Button type="submit" className="w-full cursor-pointer">
-          CHANGE PASSWORD
+        <FormField
+          control={form.control}
+          name="attachedCode"
+          render={({ field }) => (
+            <FormItem>
+              <Label htmlFor="code">Attached code:</Label>
+              <FormMessage className="text-red-500" />
+              <FormControl>
+                <Textarea
+                  className="h-48"
+                  id="code"
+                  placeholder="Attach your code ..."
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full">
+          Save
         </Button>
       </form>
     </Form>
   );
 }
 
-export default ChangedPasswordForm;
+export default AskQuestionForm;

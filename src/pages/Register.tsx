@@ -10,9 +10,9 @@ export const action: ActionFunction = async ({
   request,
 }): Promise<null | Response> => {
   const formData = await request.formData();
-  const username = formData.get("username");
-  const password = formData.get("password");
-  const confirmPassword = formData.get("confirmPassword");
+  const username = formData.get("username") as string;
+  const password = formData.get("password") as string;
+  const confirmPassword = formData.get("confirmPassword") as string;
 
   if (password !== confirmPassword) {
     toast.error("Passwords do not match");
@@ -28,7 +28,9 @@ export const action: ActionFunction = async ({
     return redirect("/login");
   } catch (error) {
     if (error instanceof AxiosError) {
-      const message = error.response?.data?.msg || "An error occurred";
+      const message =
+        error.response?.data?.msg ||
+        "Password must contain at least one lowercase letter, one uppercase letter, one number and one symbol!";
       toast.error(message);
     } else {
       toast.error("An unexpected error occurred");

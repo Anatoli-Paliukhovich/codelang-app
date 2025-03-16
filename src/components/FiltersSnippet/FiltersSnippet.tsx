@@ -1,23 +1,21 @@
 // Filters.tsx
 import { Form, useLoaderData, Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { UsersResponseWithParams } from "@/utils";
+import { SnippetsResponseWithParams } from "@/utils";
 import FormInput from "../FormInput/FormInput";
 import FormSelect from "../FormSelect/FormSelect";
 
-const Filters = () => {
-  const { data, params } = useLoaderData() as UsersResponseWithParams;
+const FiltersSnippet = () => {
+  const { data, params } = useLoaderData() as SnippetsResponseWithParams;
   const { search, sortBy, searchBy } = params;
 
-  const SEARCH_BY_OPTIONS = ["username"];
+  const SEARCH_BY_OPTIONS = ["language", "code"];
 
   const SORT_BY_OPTIONS = [
-    "id:ASC",
-    "id:DESC",
-    "username:ASC",
-    "username:DESC",
-    "role:ASC",
-    "role:DESC",
+    "code:ASC",
+    "code:DESC",
+    "language:ASC",
+    "language:DESC",
   ];
   return (
     <Form className="mb-4 border rounded-md px-8 py-4 grid gap-x-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 items-center">
@@ -31,7 +29,7 @@ const Filters = () => {
         label="Search by field"
         name="searchBy"
         options={SEARCH_BY_OPTIONS}
-        defaultValue={searchBy || "username"}
+        defaultValue={searchBy || "language"}
       />
       <FormSelect
         label="Sort by"
@@ -50,9 +48,9 @@ const Filters = () => {
         variant="outline"
         className="self-end mb-2"
       >
-        <Link to="/users">Reset</Link>
+        <Link to="/">Reset</Link>
       </Button>
     </Form>
   );
 };
-export default Filters;
+export default FiltersSnippet;
