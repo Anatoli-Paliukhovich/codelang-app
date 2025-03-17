@@ -20,21 +20,11 @@ const likesSlice = createSlice({
       .addCase(
         likeSnippet.fulfilled,
         (state, action: PayloadAction<{ snippetId: string; mark: "like" }>) => {
-          const { snippetId, mark } = action.payload;
-          const existingMark = state.marks.find(
-            (m) => m.snippetId === snippetId
+          const { snippetId } = action.payload;
+          state.marks = state.marks.filter(
+            (mark) => mark.snippetId !== snippetId || mark.type !== "dislike"
           );
-
-          if (existingMark) {
-            if (existingMark.type === "dislike") {
-              state.marks = state.marks.filter(
-                (m) => m.snippetId !== snippetId
-              );
-              state.marks.push({ type: mark, snippetId });
-            }
-          } else {
-            state.marks.push({ type: mark, snippetId });
-          }
+          state.marks.push({ type: "like", snippetId });
         }
       )
       .addCase(
@@ -43,21 +33,11 @@ const likesSlice = createSlice({
           state,
           action: PayloadAction<{ snippetId: string; mark: "dislike" }>
         ) => {
-          const { snippetId, mark } = action.payload;
-          const existingMark = state.marks.find(
-            (m) => m.snippetId === snippetId
+          const { snippetId } = action.payload;
+          state.marks = state.marks.filter(
+            (mark) => mark.snippetId !== snippetId || mark.type !== "like"
           );
-
-          if (existingMark) {
-            if (existingMark.type === "like") {
-              state.marks = state.marks.filter(
-                (m) => m.snippetId !== snippetId
-              );
-              state.marks.push({ type: mark, snippetId });
-            }
-          } else {
-            state.marks.push({ type: mark, snippetId });
-          }
+          state.marks.push({ type: "dislike", snippetId });
         }
       )
       .addCase(likeSnippet.rejected, () => {

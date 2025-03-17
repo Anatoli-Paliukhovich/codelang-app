@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 
 const MyPosts = () => {
   const userId = useAppSelector((state) => state.userState.user?.id);
+  const userLogin = useAppSelector((state) => state.userState.user);
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: snippets } = useLoaderData() as SnippetsResponseWithParams;
   const [mySnippetState, setMySnippetState] = useState(snippets);
@@ -50,6 +51,7 @@ const MyPosts = () => {
           </Button>
         </div>
       ) : (
+        userLogin &&
         mySnippetState.data.map((snippet) => (
           <SnippetCard
             key={snippet.id}
@@ -63,7 +65,7 @@ const MyPosts = () => {
           />
         ))
       )}
-      <Pagination />
+      {userLogin && <Pagination />}
     </>
   );
 };

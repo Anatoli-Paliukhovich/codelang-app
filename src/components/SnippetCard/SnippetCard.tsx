@@ -75,7 +75,7 @@ const SnippetCard: React.FC<Snippet> = ({
         <div className="flex-1">
           <p className="whitespace-pre-wrap break-all ml-2">{code}</p>
         </div>
-        {location.pathname === `/mysnippets` ? (
+        {location.pathname === `/mysnippets` && userLogin ? (
           <div className="flex flex-col gap-3">
             <Button
               className="bg-chart-1 cursor-pointer"
