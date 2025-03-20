@@ -12,19 +12,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { customFetch } from "@/utils";
+import { customFetch, formSchemaChangedUserName } from "@/utils";
 import { useAppDispatch } from "@/hooks";
 import { updateUser } from "@/features/user/userSlice";
 
-const formSchema = z.object({
-  username: z
-    .string()
-    .min(5, { message: "Password must be at least 5 characters." }),
-});
-
 function ChangedPasswordForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof formSchemaChangedUserName>>({
+    resolver: zodResolver(formSchemaChangedUserName),
     defaultValues: {
       username: "",
     },
@@ -32,7 +26,7 @@ function ChangedPasswordForm() {
 
   const dispatch = useAppDispatch();
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchemaChangedUserName>) {
     try {
       await customFetch.patch("/me", values);
       toast("Username successfully changed!");

@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
-import { customFetch } from "@/utils";
+import { customFetch, formSchemaCreatePostForm } from "@/utils";
 import {
   SelectContent,
   SelectItem,
@@ -21,11 +21,6 @@ import {
 import { Textarea } from "../ui/textarea";
 import { useEffect, useState } from "react";
 import { Label } from "../ui/label";
-
-const formSchema = z.object({
-  language: z.string().nonempty("Choose your language"),
-  code: z.string().min(1, { message: "Code must be at least 1 characters." }),
-});
 
 type Languages = string[];
 
@@ -45,15 +40,15 @@ export function CreatePostForm() {
     fetchData();
   }, []);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof formSchemaCreatePostForm>>({
+    resolver: zodResolver(formSchemaCreatePostForm),
     defaultValues: {
       language: languages[0] || "",
       code: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchemaCreatePostForm>) {
     const { ...reqData } = values;
 
     try {

@@ -12,16 +12,9 @@ import {
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { formSchemaEditQuestionForm } from "@/utils";
 
-const formSchema = z.object({
-  title: z.string().min(1, { message: "Title must be at least 1 character." }),
-  description: z
-    .string()
-    .min(1, { message: "Description must be at least 1 character." }),
-  attachedCode: z
-    .string()
-    .min(1, { message: "Code must be at least 1 character." }),
-});
+
 
 interface EditQuestionFormProps {
   defaultValues: {
@@ -29,15 +22,15 @@ interface EditQuestionFormProps {
     description?: string;
     attachedCode: string;
   };
-  onSubmit: (values: z.infer<typeof formSchema>) => Promise<void>;
+  onSubmit: (values: z.infer<typeof formSchemaEditQuestionForm>) => Promise<void>;
 }
 
 export function EditQuestionForm({
   defaultValues,
   onSubmit,
 }: EditQuestionFormProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof formSchemaEditQuestionForm>>({
+    resolver: zodResolver(formSchemaEditQuestionForm),
     defaultValues,
   });
 

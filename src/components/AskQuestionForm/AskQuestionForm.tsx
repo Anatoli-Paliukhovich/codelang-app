@@ -10,25 +10,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
-import { customFetch } from "@/utils";
+import { customFetch, formSchemaAskQuestionForm } from "@/utils";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useNavigate } from "react-router-dom";
 
-const formSchema = z.object({
-  title: z.string().min(1, { message: "Title must be at least 1 character." }),
-  description: z
-    .string()
-    .min(1, { message: "Description must be at least 1 character." }),
-  attachedCode: z
-    .string()
-    .min(1, { message: "Code must be at least 1 character." }),
-});
-
 export function AskQuestionForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof formSchemaAskQuestionForm>>({
+    resolver: zodResolver(formSchemaAskQuestionForm),
     defaultValues: {
       title: "",
       description: "",
@@ -37,7 +27,7 @@ export function AskQuestionForm() {
   });
   const navigate = useNavigate();
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchemaAskQuestionForm>) {
     const { ...reqData } = values;
 
     try {
