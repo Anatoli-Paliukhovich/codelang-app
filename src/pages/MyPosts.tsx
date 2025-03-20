@@ -1,22 +1,15 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { useAppSelector } from "@/hooks";
-import { useSearchParams, useLoaderData, Link } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import { customFetch, SnippetsResponseWithParams } from "@/utils";
 import { FiltersSnippet, Pagination, SnippetCard } from "@/components";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 const MyPosts = () => {
-  const userId = useAppSelector((state) => state.userState.user?.id);
   const userLogin = useAppSelector((state) => state.userState.user);
-  const [searchParams, setSearchParams] = useSearchParams();
   const { data: snippets } = useLoaderData() as SnippetsResponseWithParams;
   const [mySnippetState, setMySnippetState] = useState(snippets);
-  useEffect(() => {
-    if (userId && searchParams.get("userId") !== userId.toString()) {
-      setSearchParams({ userId });
-    }
-  }, [userId, setSearchParams, searchParams]);
 
   const handleDeleteSnippet = async (snippetId: string) => {
     try {

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardContent,
@@ -16,7 +15,7 @@ import {
 } from "lucide-react";
 import { getLineNumbers } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { likeSnippet, dislikeSnippet } from "@/api";
+import { toggleSnippetLike } from "@/features/likesSlice";
 import { Link, useLocation } from "react-router-dom";
 import { type Snippet } from "@/utils";
 import { toast } from "sonner";
@@ -35,6 +34,7 @@ const SnippetCard: React.FC<Snippet> = ({
   const marksState = useAppSelector((state) => state.likes.marks);
   const userLogin = useAppSelector((state) => state.userState?.user);
   const location = useLocation();
+
   const likes =
     marks.filter((mark) => mark.type === "like").length +
     marksState.filter((mark) => mark.type === "like" && mark.snippetId === id)
@@ -93,7 +93,7 @@ const SnippetCard: React.FC<Snippet> = ({
               <Link to={`/mysnippets/${id}`}>
                 <PencilLine />
               </Link>
-            </Button>{" "}
+            </Button>
           </div>
         ) : (
           ""
@@ -106,14 +106,14 @@ const SnippetCard: React.FC<Snippet> = ({
             <ThumbsUp
               className="mr-1 cursor-pointer text-chart-5"
               onClick={() => {
-                dispatch(likeSnippet(id));
+                dispatch(toggleSnippetLike({ snippetId: id, mark: "like" }));
               }}
             />
             <span>{likes}</span>
             <ThumbsDown
               className="ml-4 mr-1 cursor-pointer text-chart-1"
               onClick={() => {
-                dispatch(dislikeSnippet(id));
+                dispatch(toggleSnippetLike({ snippetId: id, mark: "dislike" }));
               }}
             />
             <span>{dislikes}</span>

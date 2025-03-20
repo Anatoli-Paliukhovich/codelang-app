@@ -1,5 +1,5 @@
 // Filters.tsx
-import { Form, useLoaderData, Link } from "react-router-dom";
+import { Form, useLoaderData, Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
 import { SnippetsResponseWithParams } from "@/utils";
 import FormInput from "../FormInput/FormInput";
@@ -8,7 +8,7 @@ import FormSelect from "../FormSelect/FormSelect";
 const FiltersSnippet = () => {
   const { data, params } = useLoaderData() as SnippetsResponseWithParams;
   const { search, sortBy, searchBy } = params;
-
+  const location = useLocation();
   const SEARCH_BY_OPTIONS = ["language", "code"];
 
   const SORT_BY_OPTIONS = [
@@ -48,7 +48,9 @@ const FiltersSnippet = () => {
         variant="outline"
         className="self-end mb-2"
       >
-        <Link to="/">Reset</Link>
+        <Link to={location.pathname === "/mysnippets" ? "/mysnippets" : "/"}>
+          Reset
+        </Link>
       </Button>
     </Form>
   );
