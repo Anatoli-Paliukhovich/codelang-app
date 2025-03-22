@@ -24,10 +24,6 @@ import {
   snippetsByUserIdLoader,
   questionsLoader,
 } from "./api";
-//actions
-import { action as registerUser } from "./pages/Register";
-import { store } from "./store";
-import { action as loginUser } from "./pages/Login";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -98,13 +94,11 @@ const App = () => {
       path: "/login",
       element: <Login />,
       errorElement: <Error />,
-      action: loginUser(store),
     },
     {
       path: "/register",
       element: <Register />,
       errorElement: <Error />,
-      action: registerUser,
     },
   ]);
 

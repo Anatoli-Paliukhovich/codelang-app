@@ -1,16 +1,15 @@
-import { useNavigation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons";
 
 const SubmitBtn = ({
   text,
   className,
+  isSubmitting,
 }: {
   text: string;
   className?: string;
+  isSubmitting: boolean;
 }) => {
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
   return (
     <Button type="submit" className={className} disabled={isSubmitting}>
       {isSubmitting ? (
@@ -24,4 +23,5 @@ const SubmitBtn = ({
     </Button>
   );
 };
+
 export default SubmitBtn;

@@ -15,6 +15,8 @@ import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import SubmitBtn from "../SubmitBtn/SubmitBtn";
 
 export function AskQuestionForm() {
   const form = useForm<z.infer<typeof formSchemaAskQuestionForm>>({
@@ -26,10 +28,10 @@ export function AskQuestionForm() {
     },
   });
   const navigate = useNavigate();
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   async function onSubmit(values: z.infer<typeof formSchemaAskQuestionForm>) {
     const { ...reqData } = values;
-
+    setIsSubmitting(true);
     try {
       await customFetch.post("/questions", reqData);
       toast("Question created successfully!");
@@ -39,6 +41,8 @@ export function AskQuestionForm() {
       console.error("Error creating snippet:", err);
       toast("Something went wrong!");
       return null;
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -91,9 +95,11 @@ export function AskQuestionForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Save
-        </Button>
+        <SubmitBtn
+          text="Save"
+          className="w-full cursor-pointer"
+          isSubmitting={isSubmitting}
+        />
       </form>
     </Form>
   );

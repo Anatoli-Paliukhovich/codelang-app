@@ -14,15 +14,15 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { formSchemaEditQuestionForm } from "@/utils";
 
-
-
 interface EditQuestionFormProps {
   defaultValues: {
     title: string;
     description?: string;
     attachedCode: string;
   };
-  onSubmit: (values: z.infer<typeof formSchemaEditQuestionForm>) => Promise<void>;
+  onSubmit: (
+    values: z.infer<typeof formSchemaEditQuestionForm>
+  ) => Promise<void>;
 }
 
 export function EditQuestionForm({

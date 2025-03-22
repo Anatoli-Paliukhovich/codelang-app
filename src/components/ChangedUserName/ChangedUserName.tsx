@@ -1,8 +1,6 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,6 +13,8 @@ import { toast } from "sonner";
 import { customFetch, formSchemaChangedUserName } from "@/utils";
 import { useAppDispatch } from "@/hooks";
 import { updateUser } from "@/features/user/userSlice";
+import { useState } from "react";
+import SubmitBtn from "../SubmitBtn/SubmitBtn";
 
 function ChangedPasswordForm() {
   const form = useForm<z.infer<typeof formSchemaChangedUserName>>({
@@ -25,16 +25,20 @@ function ChangedPasswordForm() {
   });
 
   const dispatch = useAppDispatch();
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   async function onSubmit(values: z.infer<typeof formSchemaChangedUserName>) {
+    setIsSubmitting(true);
     try {
       await customFetch.patch("/me", values);
       toast("Username successfully changed!");
       dispatch(updateUser({ username: values.username }));
+      form.reset();
     } catch (err) {
       console.error("Error changing username:", err);
       toast("Something went wrong!");
       return null;
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -53,9 +57,11 @@ function ChangedPasswordForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full cursor-pointer">
-          SAVE
-        </Button>
+        <SubmitBtn
+          text="Save"
+          className="w-full cursor-pointer"
+          isSubmitting={isSubmitting}
+        />
       </form>
     </Form>
   );

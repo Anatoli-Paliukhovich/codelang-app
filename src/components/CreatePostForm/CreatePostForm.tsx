@@ -21,12 +21,13 @@ import {
 import { Textarea } from "../ui/textarea";
 import { useEffect, useState } from "react";
 import { Label } from "../ui/label";
+import SubmitBtn from "../SubmitBtn/SubmitBtn";
 
 type Languages = string[];
 
 export function CreatePostForm() {
   const [languages, setLanguages] = useState<Languages>([]);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,7 +51,7 @@ export function CreatePostForm() {
 
   async function onSubmit(values: z.infer<typeof formSchemaCreatePostForm>) {
     const { ...reqData } = values;
-
+    setIsSubmitting(true);
     try {
       await customFetch.post("/snippets", reqData);
       toast("Snippet created successfully!");
@@ -59,6 +60,8 @@ export function CreatePostForm() {
       console.error("Error creating snippet:", err);
       toast("Something went wrong!");
       return null;
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -108,9 +111,11 @@ export function CreatePostForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full cursor-pointer">
-          CREATE SNIPPET
-        </Button>
+        <SubmitBtn
+          text="Create Snippet"
+          className="w-full cursor-pointer"
+          isSubmitting={isSubmitting}
+        />
       </form>
     </Form>
   );

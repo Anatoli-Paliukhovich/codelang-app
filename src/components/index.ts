@@ -22,4 +22,6 @@ export { default as EditPostForm } from "../components/EditPostForm/EditPostForm
 export { default as SnippetCard } from "./SnippetCard/SnippetCard";
 export { default as QuestionCard } from "./QuestionCard/QuestionCard";
 export { default as EditQuestionForm } from "./EditQuestionForm/EditQuestionForm";
+export { default as RegisterForm } from "./RegisterForm/RegisterForm";
+export { default as LoginForm } from "./LoginForm/LoginForm";
 export { default as DeleteAccountDialog } from "./DeleteAccountDialog/DeleteAccountDialog";
