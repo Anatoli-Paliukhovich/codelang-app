@@ -10,32 +10,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { customFetch } from "@/utils";
+import { customFetch, formSchemaLoginForm } from "@/utils";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAppDispatch } from "@/hooks";
 import { loginUser } from "@/features/user/userSlice";
 import SubmitBtn from "../SubmitBtn/SubmitBtn";
 import { useState } from "react";
-
-const passwordValidation = z
-  .string()
-  .min(6, { message: "Password must be at least 6 characters." })
-  .regex(/[a-z]/, {
-    message: "Password must contain at least one lowercase letter.",
-  })
-  .regex(/[A-Z]/, {
-    message: "Password must contain at least one uppercase letter.",
-  })
-  .regex(/[0-9]/, { message: "Password must contain at least one number." })
-  .regex(/[\W_]/, { message: "Password must contain at least one symbol." });
-
-const formSchemaLoginForm = z.object({
-  username: z
-    .string()
-    .min(5, { message: "Username must be at least 5 characters." }),
-  password: passwordValidation,
-});
 
 function LoginForm() {
   const form = useForm<z.infer<typeof formSchemaLoginForm>>({
